@@ -10,7 +10,7 @@ RUN apt install -y php-fpm php-mysql
 # php-mysql: To connect to MariaDB database.
 
 RUN mkdir -p /var/www/html
-# -p means parent directory, if /var or /www doesn't exist, they will be created
+# -p means parent directory, if /var or /www doesn't exist, they will be created.
 
 RUN wget -O /tmp/wordpress.tar.gz https://wordpress.org/latest.tar.gz
 # wget is a command-line utility used to download files from the internet.
@@ -23,5 +23,8 @@ RUN tar -xzf /tmp/wordpress.tar.gz -C /var/www/html && rm /tmp/wordpress.tar.gz
 # -f specifies the filename of the archive to be extracted.
 # -C specifies the target directory where the extracted files will be placed.
 
-
 RUN apt install -y mariadb-client
+
+COPY wp_init.sh /
+
+CMD ["sh", "wp_init.sh"]
