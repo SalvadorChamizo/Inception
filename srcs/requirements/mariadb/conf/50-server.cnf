@@ -58,9 +58,35 @@ bind-address            = ::
 # the system configuration. If you want to specify to work always with IPv4
 # and IPv6 if it's possible, you should use bind-address = ::
 
+
+# The socket directive specifies the Unix socket file used for local
+# connectinos between MariaDB and client applications.
+socket                 = /var/run/mysqld/mysqld.sock
+# A socket is a fundamental concept in computer networking and inter-process
+# communication. It acts as an endpoint for sending or receiving data across
+# a network or between processes on the same machine.
+# An endpoind is like a door to a service or resource that you want to
+# interact with. It is where you send your request to and where the response
+# comes from.
+
 # This directive specifies the TCP port number that the MariaDB server will
 # use to listen for incoming client connections.
 port                    = 3306
 # By default, MariaDB uses port 3306, which is the standard port for MySQL and
 # MariaDB servers, even if we don't set explicitly the port directive.
 
+# Logging is essential for debugging and monitoring MariaDB
+
+# This directive specifies the file where MariaDB will log error messages.
+log-error               = /var/log/mysql/error.log
+# If not explicitly set, MariaDB may use a default error log location or
+# write errors to the system log.
+
+# This directives enables general logging for MariaDB.
+general_log             = 1
+# When set to 1, MariaDB will log all queries and connections to the
+# database. By default, this is usually set to 0 (disabled) because logging
+# every query can generate a lot of data and impact performance.
+
+# Specifies the file where the general log will be written.
+general_log_file        = /var/log/mysql/general.log
