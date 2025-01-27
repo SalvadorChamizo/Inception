@@ -95,7 +95,8 @@ wp core install --allow-root --url=$WP_URL \
                              --admin_password=$WP_ADMIN_PWD \
                              --admin_email=$WP_ADMIN_EMAIL \
                              --skip-email \
-                             --locale=es_ES
+                             --locale=es_ES \
+			     --path='/var/www/html/wordpress'
 # wp core install -> Command to run the WordPress core installation process.
 # --url= -> Specifies the site URL for the WordPress installation.
 # --title= -> Sets the title of the WordPress site.
