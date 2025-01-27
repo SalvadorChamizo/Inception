@@ -4,27 +4,27 @@ exit_flag=false
 
 # Ensure each environment variable is set
 
-if [-z "$SQL_DATABASE"]; then
+if [ -z "$SQL_DATABASE" ]; then
     echo "ERROR: Environment variable SQL_DATABASE is not set."
     exit_flag=true
 fi
 
-if [-z "$SQL_USER"]; then 
+if [ -z "$SQL_USER" ]; then 
     echo "ERROR: Environment variable SQL_USER is not set."
     exit_flag=true
 fi
 
-if [-z "$SQL_PASSWORD"]; then
+if [ -z "$SQL_PASSWORD" ]; then
     echo "ERROR: Environment variable SQL_PASSWORD is not set."
     exit_flag=true
 fi
 
-if [-z "$SQL_ROOT_PASSWORD"]; then
+if [ -z "$SQL_ROOT_PASSWORD" ]; then
     echo "ERROR: Environment variable SQL_ROOT_PASSWORD is not set."
     exit_flag=true
 fi
 
-if ["$exit_flag" = true]; then
+if [ "$exit_flag" = true ]; then
     exit 1
 fi
 
