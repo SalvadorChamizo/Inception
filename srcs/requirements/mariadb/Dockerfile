@@ -6,5 +6,6 @@ RUN apt install mariadb-server -y
 
 COPY conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 COPY tools/mariadb_script.sh /
+COPY tools/mariadb_init.sh /
 
-CMD ["bash", "mariadb_script.sh"]
+CMD ["bash", "mariadb_init.sh"]
