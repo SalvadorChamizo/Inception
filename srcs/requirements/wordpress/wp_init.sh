@@ -50,6 +50,8 @@ sed -i "s#listen = /run/php/php${PHP_VERSION}-fpm.sock#listen = wordpress:9000#g
 # But you will need to install wp-cli anyway for the WordPress installation, and it's the most \
 # efficient tool in most cases for managing WordPress in scripts, so I will choose the second option.
 
+if [ ! -f /var/www/html/wp-config.php ]; then
+
 ###
 
 # WP-CLI is a command-line interface for managing WordPress installations.
@@ -58,29 +60,29 @@ sed -i "s#listen = /run/php/php${PHP_VERSION}-fpm.sock#listen = wordpress:9000#g
 
 # We will download wp-cli in the /usr/local/bin directory, the place \
 # where applications that not came from Linux should go.
-cd /usr/local/bin
+        cd /usr/local/bin
 
 # We will download it from the Github repository.
-wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+        wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 # A .phar file is a type of compressed file used to package PHP applications or \
 # libraries into a single executable file.
 
 # We will change the name of the file
-mv wp-cli.phar wp
+        mv wp-cli.phar wp
 
 # Change the permission to execute it
-chmod +x wp
+        chmod +x wp
 
 # We will go to the directory where the wp-config.php should be.
-cd /var/www/html/wordpress
+        cd /var/www/html/wordpress
 
 # This command will create the wp-config.php file with our custom configuration.
-wp config create --allow-root --dbname=$SQL_DATABASE \
-                                --dbuser=$SQL_USER \
-                                --dbpass=$SQL_PASSWORD \
-                                --dbhost=mariadb:3306 \
-				--url=$WP_URL \
-                                --path='/var/www/html/wordpress'
+        wp config create --allow-root   --dbname=$SQL_DATABASE \
+                                        --dbuser=$SQL_USER \
+                                        --dbpass=$SQL_PASSWORD \
+                                        --dbhost=mariadb:3306 \
+				        --url=$WP_URL \
+                                        --path='/var/www/html/wordpress'
 # wp config create -> Command to create the wp-config.php
 # --allow-root -> Flag to create it as root. If not set, there is an error message.
 # --dbname= -> Indicate the name of the database.
@@ -90,14 +92,14 @@ wp config create --allow-root --dbname=$SQL_DATABASE \
 # --path= -> Path where the wp-config.php will be created.
 
 # Command to install WordPress with the initial site configuration.
-wp core install --allow-root --url=$WP_URL \
-                             --title=$WP_TITLE \
-                             --admin_user=$WP_ADMIN_USR \
-                             --admin_password=$WP_ADMIN_PWD \
-                             --admin_email=$WP_ADMIN_EMAIL \
-                             --skip-email \
-                             --locale=es_ES \
-			     --path='/var/www/html/wordpress'
+        wp core install --allow-root    --url=$WP_URL \
+                                        --title=$WP_TITLE \
+                                        --admin_user=$WP_ADMIN_USR \
+                                        --admin_password=$WP_ADMIN_PWD \
+                                        --admin_email=$WP_ADMIN_EMAIL \
+                                        --skip-email \
+                                        --locale=es_ES \
+			                --path='/var/www/html/wordpress'
 # wp core install -> Command to run the WordPress core installation process.
 # --url= -> Specifies the site URL for the WordPress installation.
 # --title= -> Sets the title of the WordPress site.
@@ -106,12 +108,12 @@ wp core install --allow-root --url=$WP_URL \
 
 # Now we will create a new user with security porpuses, because it's \
 # not secure to have only an admin and do every task with it.
-wp user create $WP_USR $WP_EMAIL --role=author \
-                                 --user_pass=$WP_PWD \
-                                 --allow-root
+        wp user create $WP_USR $WP_EMAIL --role=author \
+                                         --user_pass=$WP_PWD \
+                                         --allow-root
 # wp user create -> Command to create a new WordPress user.
 # --role=author -> Specifies the role of the new user. Author can publish and manage their own posts.
-
+fi
 # Now I will use a command to run the PHP-FPM process in the foreground.
 php-fpm${PHP_VERSION} -F
 # This is because containers are designed to keep running as long as \
