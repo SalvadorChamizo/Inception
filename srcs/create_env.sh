@@ -49,7 +49,7 @@ WP_EMAIL=$(prompt_with_loop "Enter WordPress user email :")
 
 WP_PWD=$(prompt_with_loop "Enter WordPress user password: ")
 
-WP_URL=${WP_URL:-schamizo.42.fr}
+WP_URL=${WP_URL:https://-schamizo.42.fr}
 
 cat <<EOL > $ENV_FILE
 SQL_DATABASE=$SQL_DATABASE
