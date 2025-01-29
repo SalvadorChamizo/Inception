@@ -12,11 +12,11 @@ echo "CREATE DATABASE IF NOT EXISTS ${SQL_DATABASE};" >> init.sql
 # Create the user if it doesn't exist
 echo "CREATE USER '${SQL_USER}'@'%' IDENTIFIED BY '${SQL_PASSWORD}';" >> init.sql
 
-# Grant all privileges to the user on the specified database
-echo "GRANT ALL PRIVILEGES ON *.* TO '${SQL_USER}'@'%';" >> init.sql
-
 # Change the root password
 echo "ALTER USER 'root'@'localhost' IDENTIFIED BY '${SQL_ROOT_PASSWORD}';" >> init.sql
+
+# Grant all privileges to the user on the specified database
+echo "GRANT ALL PRIVILEGES ON *.* TO '${SQL_USER}'@'%';" >> init.sql
 
 # Apply privilege changes
 echo "FLUSH PRIVILEGES;" >> init.sql
