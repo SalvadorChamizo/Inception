@@ -113,6 +113,8 @@ if [ ! -f /var/www/html/wp-config.php ]; then
                                          --allow-root
 # wp user create -> Command to create a new WordPress user.
 # --role=author -> Specifies the role of the new user. Author can publish and manage their own posts.
+else
+        echo "wp-config.php already exists."
 fi
 # Now I will use a command to run the PHP-FPM process in the foreground.
 php-fpm${PHP_VERSION} -F
