@@ -117,7 +117,7 @@ else
         echo "wp-config.php already exists."
 fi
 # Now I will use a command to run the PHP-FPM process in the foreground.
-php-fpm${PHP_VERSION} -F
+php-fpm${PHP_VERSION} &
 # This is because containers are designed to keep running as long as \
 # their main process is active. Running php-fpm in the background \
 # will stop the container because Docker assumes the process has exited.
