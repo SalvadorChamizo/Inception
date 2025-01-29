@@ -79,6 +79,7 @@ wp config create --allow-root --dbname=$SQL_DATABASE \
                                 --dbuser=$SQL_USER \
                                 --dbpass=$SQL_PASSWORD \
                                 --dbhost=mariadb:3306 \
+				--url=$WP_URL \
                                 --path='/var/www/html/wordpress'
 # wp config create -> Command to create the wp-config.php
 # --allow-root -> Flag to create it as root. If not set, there is an error message.
