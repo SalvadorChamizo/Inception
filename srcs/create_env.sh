@@ -31,9 +31,6 @@ NAME_USER="salva"
 # Name for the file to be created.
 ENV_FILE=".env"
 
-WORDPRESS_DATA_LOCATION="/home/$INCEPTION_USER/data/wordpress"
-
-MARIABD_DATA_LOCATION="/home/$INCEPTION_USER/data/database"
 
 # Name for the database
 read -p "Enter SQL database name: (default: my_database) " SQL_DATABASE
@@ -90,4 +87,6 @@ WP_ADMIN_EMAIL=$WP_ADMIN_EMAIL
 WP_USR=$WP_USR
 WP_EMAIL=$WP_EMAIL
 WP_PWD=$WP_PWD
+WORDPRESS_DATA_LOCATION="/home/$INCEPTION_USER/data/wordpress"
+MARIABD_DATA_LOCATION="/home/$INCEPTION_USER/data/database"
 EOL
