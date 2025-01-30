@@ -10,13 +10,13 @@ stop:
 re: stop all
 
 mariadb:
-	docker exec -it mariadb-container /bin/bash
+	docker exec -it mariadb /bin/bash
 
 wordpress:
-	docker exec -it wordpress-container /bin/bash
+	docker exec -it wordpress /bin/bash
 
 nginx:
-	docker exec -it nginx-container /bin/bash
+	docker exec -it nginx /bin/bash
 
 clean:
 	docker volume rm DataBase WordPress
