@@ -4,7 +4,7 @@
 services: # This section defines the services in the Docker Compose file.
 # Each service corresponds to a container. 
   nginx: # The name that identifies the service nginx.
-    container_name: nginx-container # Static name for the container
+    container_name: nginx # Static name for the container
     build: ./requirements/nginx/ # Specifies the directory containing the Dockerfile
     image: nginx:1.0.0
     ports:
@@ -20,7 +20,7 @@ services: # This section defines the services in the Docker Compose file.
     # Allows communication between containers on the same network.
   
   mariadb:
-    container_name: mariadb-container
+    container_name: mariadb
     build: ./requirements/mariadb/
     image: mariadb:1.0.0
     expose:
@@ -33,7 +33,7 @@ services: # This section defines the services in the Docker Compose file.
       - inception
   
   wordpress:
-    container_name: wordpress-container
+    container_name: wordpress
     build: ./requirements/wordpress/
     image: wordpress:1.0.0
     expose:
