@@ -58,14 +58,14 @@ volumes: # This section defines named volumes for your Docker Compose setup.
       type: 'none' # Specifies the type of mount for the volume.
       o: 'bind' # Binds a specific directory from the host machine to the container.
       device: ${WORDPRESS_DATA_LOCATION} # Specifies the host directory that the volume will bind to.
-    
+            # /home/$USER/data/wordpress See in the create_env.sh file.
   DataBase:
     name: DataBase
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: ${MARIADB_DATA_LOCATION}
+      device: ${MARIADB_DATA_LOCATION} # "/home/$USER/data/database" See in the create_env.sh file.
 
 networks:
   inception:
