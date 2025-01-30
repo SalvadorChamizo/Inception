@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# This script must be executed with bash
+
+# Function used to ask for input without show the keys pressed
 prompt_with_loop()
 {
     local prompt_message=$1
@@ -19,37 +22,60 @@ prompt_with_loop()
     echo "$input"
 }
 
+# With this I only have to change the name once if I want to execute Inception with other user.
+INCEPTION_USER="schamizo"
+
+# This variable sets the wordpress username
+NAME_USER="salva"
+
+# Name for the file to be created.
 ENV_FILE=".env"
 
+WORDPRESS_DATA_LOCATION="/home/$INCEPTION_USER/data/wordpress"
+
+MARIABD_DATA_LOCATION="/home/$INCEPTION_USER/data/database"
+
+# Name for the database
 read -p "Enter SQL database name: (default: my_database) " SQL_DATABASE
 SQL_DATABASE=${SQL_DATABASE:-my_database}
 
-read -p "Enter SQL user: (default: schamizo) " SQL_USER
-SQL_USER=${SQL_USER:-schamizo}
+# User for SQL
+read -p "Enter SQL user: (default: $INCEPTION_USER) " SQL_USER
+SQL_USER=${SQL_USER:-$INCEPTION_USER}
 
+# Password for SQL
 SQL_PASSWORD=$(prompt_with_loop "Enter SQL password: ")
 
+# Root password for SQL
 SQL_ROOT_PASSWORD=$(prompt_with_loop "Enter SQL root password: ")
 
-read -p "Enter WordPress title (default: schamizo): " WP_TITLE
-WP_TITLE=${WP_TITLE:-schamizo}
+# Title for the wordpress's site
+read -p "Enter WordPress title (default: $INCEPTION_USER): " WP_TITLE
+WP_TITLE=${WP_TITLE:-$INCEPTION_USER}
 
-read -p "Enter WordPress admin username (default: schamizo): " WP_ADMIN_USR
-WP_ADMIN_USR=${WP_ADMIN_USR:-schamizo}
+# Admin username for Wordpress
+read -p "Enter WordPress admin username (default: $INCEPTION_USER): " WP_ADMIN_USR
+WP_ADMIN_USR=${WP_ADMIN_USR:-$INCEPTION_USER}
 
+# Admin password for Wordpress
 WP_ADMIN_PWD=$(prompt_with_loop "Enter WordPress admin password: ")
 
-read -p "Enter WordPress admin email (default: schamizo@student.42malaga.com)" WP_ADMIN_EMAIL
-WP_ADMIN_EMAIL=${WP_ADMIN_EMAIL:-schamizo@student.42malaga.com}
+# Admin email for Wordpress
+read -p "Enter WordPress admin email (default: $INCEPTION_USER@student.42malaga.com)" WP_ADMIN_EMAIL
+WP_ADMIN_EMAIL=${WP_ADMIN_EMAIL:-$INCEPTION_USER@student.42malaga.com}
 
-read -p "Enter WordPress username (default: salva): " WP_USR
-WP_USR=${WP_USR:-salva}
+# Username for Wordpress
+read -p "Enter WordPress username (default: $NAME_USER): " WP_USR
+WP_USR=${WP_USR:-$NAME_USER}
 
+# User email for Wordpress
 WP_EMAIL=$(prompt_with_loop "Enter WordPress user email :")
 
+# User password for Wordpress
 WP_PWD=$(prompt_with_loop "Enter WordPress user password: ")
 
-WP_URL=${WP_URL:https://-schamizo.42.fr}
+# WordPress URL
+WP_URL=${WP_URL:-$INCEPTION_USER.42.fr}
 
 cat <<EOL > $ENV_FILE
 SQL_DATABASE=$SQL_DATABASE
