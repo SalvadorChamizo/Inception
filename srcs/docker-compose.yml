@@ -57,7 +57,7 @@ volumes: # This section defines named volumes for your Docker Compose setup.
     driver_opts: # Allows you to configure options for the specified volume driver.
       type: 'none' # Specifies the type of mount for the volume.
       o: 'bind' # Binds a specific directory from the host machine to the container.
-      device: '/home/schamizo/data/wordpress' # Specifies the host directory that the volume will bind to.
+      device: ${WORDPRESS_DATA_LOCATION} # Specifies the host directory that the volume will bind to.
     
   DataBase:
     name: DataBase
@@ -65,7 +65,7 @@ volumes: # This section defines named volumes for your Docker Compose setup.
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/schamizo/data/database'
+      device: ${MARIADB_DATA_LOCATION}
 
 networks:
   inception:
