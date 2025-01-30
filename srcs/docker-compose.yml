@@ -6,6 +6,7 @@ services: # This section defines the services in the Docker Compose file.
   nginx: # The name that identifies the service nginx.
     container_name: nginx-container # Static name for the container
     build: ./requirements/nginx/ # Specifies the directory containing the Dockerfile
+    image: nginx:1.0.0
     ports:
       - "443:443" # Maps port 443 on the host machine to port 443 inside the container.
     env_file: .env # Specifies an external file that contains environment variables for the container.
@@ -21,6 +22,7 @@ services: # This section defines the services in the Docker Compose file.
   mariadb:
     container_name: mariadb-container
     build: ./requirements/mariadb/
+    image: mariadb:1.0.0
     expose:
       - "3306"
     env_file: .env
@@ -33,6 +35,7 @@ services: # This section defines the services in the Docker Compose file.
   wordpress:
     container_name: wordpress-container
     build: ./requirements/wordpress/
+    image: wordpress:1.0.0
     expose:
       - "9000"
     env_file: .env
