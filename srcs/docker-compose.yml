@@ -1,0 +1,73 @@
+# All the docker-compose files that I have seen until now, use the \
+# 'version' directive, but it's obsolete.
+
+services: # This section defines the services in the Docker Compose file.
+# Each service corresponds to a container. 
+  nginx: # The name that identifies the service nginx.
+    container_name: nginx # Static name for the container
+    build: ./requirements/nginx/ # Specifies the directory containing the Dockerfile
+    image: nginx:1.0.0
+    ports:
+      - "443:443" # Maps port 443 on the host machine to port 443 inside the container.
+    env_file: .env # Specifies an external file that contains environment variables for the container.
+    restart: unless-stopped # Configures the restart policy for the container. POSSIBLE: "no", "on-failure", "unless-stopped", "always"
+    depends_on: # Specifies that nginx service depends on the wordpress service.
+      - wordpress
+    volumes: # Mounts a volume into the container.
+      - WordPress:/var/www/html
+    networks: # Connects the nginx container to a custom Docker network.
+      - inception
+    # Allows communication between containers on the same network.
+  
+  mariadb:
+    container_name: mariadb
+    build: ./requirements/mariadb/
+    image: mariadb:1.0.0
+    expose:
+      - "3306"
+    env_file: .env
+    restart: unless-stopped
+    volumes:
+      - DataBase:/var/lib/mysql
+    networks:
+      - inception
+  
+  wordpress:
+    container_name: wordpress
+    build: ./requirements/wordpress/
+    image: wordpress:1.0.0
+    expose:
+      - "9000"
+    env_file: .env
+    restart: unless-stopped
+    depends_on:
+      - mariadb
+    volumes:
+      - WordPress:/var/www/html
+    networks:
+      - inception
+
+volumes: # This section defines named volumes for your Docker Compose setup.
+# Volumes are used to persist data and share files between the host \
+# and containers or between containers.
+
+  WordPress: # Identifier for the volume.
+    name: WordPress # Specifies a custom name for the volume.
+    driver: local # Specifies the driver used to manage the volume.
+    driver_opts: # Allows you to configure options for the specified volume driver.
+      type: 'none' # Specifies the type of mount for the volume.
+      o: 'bind' # Binds a specific directory from the host machine to the container.
+      device: ${WORDPRESS_DATA_LOCATION} # Specifies the host directory that the volume will bind to.
+            # /home/$USER/data/wordpress See in the create_env.sh file.
+  DataBase:
+    name: DataBase
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: ${MARIADB_DATA_LOCATION} # "/home/$USER/data/database" See in the create_env.sh file.
+
+networks:
+  inception:
+    name: inception
+    driver: bridge

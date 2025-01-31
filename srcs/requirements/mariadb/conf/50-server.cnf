@@ -1,0 +1,92 @@
+###   MARIADB CONFIGURATION FILE
+
+# In MariaDB, words that appear between brackets [] are called
+# sections.
+
+# These sections help organize and categorize configuration settings
+# based on their relevance to specific parts of the MariaDB server or its components.
+
+###   [server] SECTION
+
+# This section is used for options that apply to the MariaDB server in
+# general, both for standalone and embedded configurations.
+
+[server]
+
+# This section might be empty or include options that apply globally
+# to the MariaDB server process.
+
+# In this case it is empty.
+
+###   [mysqld] SECTION
+
+# This section is for settings that specifically apply to the MariaDB
+# server daemon (mysqld), which is the process that runs the MariaDB
+# database engine.
+
+[mysqld]
+
+# Any configuration under this section will directly affect how the
+# database server behaves (e.g., memory usage, connections, logging).
+
+
+# This specifies the system user that the MariaDB server will run as.
+# By defaylt, MariaDB runs as the mysql user for security reasons.
+# This user should have limited permissions to reduce risks.
+user                    = mysql
+# It's still considered good practice to explicitly define the user.
+
+
+# This specifies the directory where the MariaDB database files are stored.
+# The datadir is one of the most critical configurations for
+# performance and reliability.
+datadir                 = /var/lib/mysql
+# Ensure that the datadir is located on a partition with sufficient
+# space and performance. Use a dedicated disk for data storage if possible.
+
+
+# This controls which IP address the MariaDB server will listen to
+# for incoming connections. By default, it may be set to 127.0.0.1
+# (localhost), which limits connections to the local machine.
+bind-address            = ::
+# This project involves multiple containers, so we need to allow connections
+# to MariaDB from other containers in the network. Setting bind-address = *
+# or bind-address = 0.0.0.0 allows MariaDB to accept connections from any
+# container or service, regardless of its IP address.
+# If you use bind-address = 0.0.0.0 you are just allowing IPv4, and if
+# you use bind-address = *, it will use IPv4 or IPv4 and IPv6 depending of
+# the system configuration. If you want to specify to work always with IPv4
+# and IPv6 if it's possible, you should use bind-address = ::
+
+
+# The socket directive specifies the Unix socket file used for local
+# connectinos between MariaDB and client applications.
+socket                 = /var/run/mysqld/mysqld.sock
+# A socket is a fundamental concept in computer networking and inter-process
+# communication. It acts as an endpoint for sending or receiving data across
+# a network or between processes on the same machine.
+# An endpoind is like a door to a service or resource that you want to
+# interact with. It is where you send your request to and where the response
+# comes from.
+
+# This directive specifies the TCP port number that the MariaDB server will
+# use to listen for incoming client connections.
+port                    = 3306
+# By default, MariaDB uses port 3306, which is the standard port for MySQL and
+# MariaDB servers, even if we don't set explicitly the port directive.
+
+# Logging is essential for debugging and monitoring MariaDB
+
+# This directive specifies the file where MariaDB will log error messages.
+log-error               = /var/log/mysql/error.log
+# If not explicitly set, MariaDB may use a default error log location or
+# write errors to the system log.
+
+# This directives enables general logging for MariaDB.
+general_log             = 1
+# When set to 1, MariaDB will log all queries and connections to the
+# database. By default, this is usually set to 0 (disabled) because logging
+# every query can generate a lot of data and impact performance.
+
+# Specifies the file where the general log will be written.
+general_log_file        = /var/log/mysql/general.log
