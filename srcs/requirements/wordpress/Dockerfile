@@ -27,4 +27,6 @@ RUN apt install -y mariadb-client
 
 COPY wp_init.sh /
 
+EXPOSE 9000
+
 CMD ["sh", "wp_init.sh"]
