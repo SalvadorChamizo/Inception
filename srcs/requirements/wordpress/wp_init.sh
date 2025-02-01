@@ -89,6 +89,13 @@ wp config create --allow-root   --dbname=$SQL_DATABASE \
 # --dbhost= -> Indicates where the database is.
 # --path= -> Path where the wp-config.php will be created.
 
+### BONUS PART: 
+wp config set WP_REDIS_HOST 'redis' --raw
+wp config set WP_REDIS_PORT 6379 --raw
+wp config set WP_CACHE true --raw
+wp config set WP_CACHE_KEY_SALT 'mywordpresssite_' --raw
+wp config set WP_REDIS_CLIENT 'phpredis' --raw
+
 # Command to install WordPress with the initial site configuration.
 wp core install --allow-root    --url=$WP_URL \
                                 --title=$WP_TITLE \
