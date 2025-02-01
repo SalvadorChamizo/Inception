@@ -21,5 +21,5 @@ sed -i "s|# maxmemory <bytes>|maxmemory 2mb|g" /etc/redis/redis.conf
 # it refuses new writes. allkeys-lru will allow redis to remove the least recently used (lru) key when memory is full.
 sed -i "s|# maxmemory-policy noeviction|maxmemory-policy allkeys-lru|g" /etc/redis/redis.conf
 
-# Runs redis-server in the foreground.
-redis-server --daemonize no
+# Runs redis-server in the foreground and allows external connections
+redis-server --protected-mode no
