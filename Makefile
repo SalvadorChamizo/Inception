@@ -23,9 +23,20 @@ wordpress:
 nginx:
 	docker exec -it nginx /bin/bash
 
+# Access redis container
+redis:
+	docker exec -it redis /bin/bash
+
 # Remove the volumes
 clean:
 	docker volume rm DataBase WordPress
+
+# Remove everything
+fclean:
+	docker stop $$(docker ps -qa); docker rm $$(docker ps -qa); docker rmi -f $$(docker images -qa); docker volume rm $$(docker volume ls -q); docker network rm $$(docker network ls -q) 2>/dev/null
+
+fclean_cache:
+	docker system prune -a --volumes
 
 # Run docker compose in the background and rebuild images and containers.
 recreate:
