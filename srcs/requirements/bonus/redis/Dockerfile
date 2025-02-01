@@ -6,4 +6,4 @@ RUN apt install redis -y
 
 COPY ./tools/redis_init.sh /
 
-CMD ["redis-server", "--daemonize", "no"]
+CMD ["sh", "redis_init.sh"]
