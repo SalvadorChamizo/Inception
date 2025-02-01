@@ -50,8 +50,8 @@ services: # This section defines the services in the Docker Compose file.
   # Bonus Part
   redis:
     container_name: redis
-    build: -/requirements/bonus/redis
-    image:redis:1.0.0
+    build: ./requirements/bonus/redis/
+    image: redis:1.0.0
     expose:
       - "6379"
     env_file: .env
