@@ -92,11 +92,11 @@ wp config create --allow-root   --dbname=$SQL_DATABASE \
 ###            BONUS PART: REDIS              ###
 
 #Modify the wp-config.php to add Redis
-wp config set WP_REDIS_HOST 'redis' --raw
-wp config set WP_REDIS_PORT 6379 --raw
-wp config set WP_CACHE true --raw
-wp config set WP_CACHE_KEY_SALT 'mywordpresssite_' --raw
-wp config set WP_REDIS_CLIENT 'phpredis' --raw
+wp config set WP_REDIS_HOST 'redis' --raw --allow-root
+wp config set WP_REDIS_PORT 6379 --raw --allow-root
+wp config set WP_CACHE true --raw --allow-root
+wp config set WP_CACHE_KEY_SALT 'mywordpresssite_' --raw --allow-root
+wp config set WP_REDIS_CLIENT 'phpredis' --raw --allow-root
 # WP_REDIS_HOST -> Define the Redis Host (container name for Redis service)
 # WP_REDIS_PORT -> Define the Redis Port (default 6379)
 # WP_CACHE -> Enable WordPress Object Cache
