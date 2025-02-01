@@ -89,12 +89,35 @@ wp config create --allow-root   --dbname=$SQL_DATABASE \
 # --dbhost= -> Indicates where the database is.
 # --path= -> Path where the wp-config.php will be created.
 
-### BONUS PART: 
+###            BONUS PART: REDIS              ###
+
+#Modify the wp-config.php to add Redis
 wp config set WP_REDIS_HOST 'redis' --raw
 wp config set WP_REDIS_PORT 6379 --raw
 wp config set WP_CACHE true --raw
 wp config set WP_CACHE_KEY_SALT 'mywordpresssite_' --raw
 wp config set WP_REDIS_CLIENT 'phpredis' --raw
+# WP_REDIS_HOST -> Define the Redis Host (container name for Redis service)
+# WP_REDIS_PORT -> Define the Redis Port (default 6379)
+# WP_CACHE -> Enable WordPress Object Cache
+# WP_CACHE_KEY_SALT (Recommended) -> This adds a prefix to all cache keys to avoid conflicts if multiple \
+# WordPress installations share the same Redis server.
+# WP_REDIS_CLIENT (Optional) -> This tells WordPress to use phpredis instead of Predis, which is slower.
+# --raw -> This prevents WordPress from wrapping values in quotes (true instead of 'true')
+
+# Install and activate Redis Object Cache Plugin
+wp plugin install redis-cache --activate --allow-root
+# install redis-cache -> Installs the Redis Object Cache Plugin
+# --activate -> Automatically activates the plugin after installation
+
+# (Optional but Recommended)
+wp plugin update --all --allow-root
+# Ensures all plugins are updated to the latest version
+
+# Enable Redis Cache in WordPress
+wp redis enable --allow-root
+
+###           END OF REDIS PART          ###
 
 # Command to install WordPress with the initial site configuration.
 wp core install --allow-root    --url=$WP_URL \
