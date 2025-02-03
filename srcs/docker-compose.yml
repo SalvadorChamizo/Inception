@@ -61,6 +61,19 @@ services: # This section defines the services in the Docker Compose file.
     networks:
       - inception
 
+  adminer:
+    container_name: adminer
+    build: ./requirements/bonus/adminer/
+    image: adminer:1.0.0
+    expose:
+      - "9000"
+    env_file: .env
+    restart: unless-stopped
+    depends_on:
+      - mariadb
+    networks:
+      - inception
+
 volumes: # This section defines named volumes for your Docker Compose setup.
 # Volumes are used to persist data and share files between the host \
 # and containers or between containers.
