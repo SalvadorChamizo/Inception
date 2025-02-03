@@ -1,0 +1,3 @@
+PHP_VERSION=$(php -r "echo PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION;")
+
+php-fpm${PHP_VERSION} -F 0.0.0.0:9000
