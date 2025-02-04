@@ -7,7 +7,7 @@ if [ ! -f "/etc/vsftpd.conf.bak" ]; then
     sed -i "s|anonymous_enable=NO|anonymous_enable=YES|g" /etc/vsftpd.conf
     sed -i "s|#ftpd_banner=Welcome to blah FTP service.|ftpd_banner=Welcome to Inception FTC service|g" /etc/vsftpd.conf
     sed -i "s|listen=NO|listen=YES|g" /etc/vsftpd.conf
-    sed -i "s|listen_ipv6=YES|#listen_ipv6=YES|g" /etc/vsdtpd.conf
+    sed -i "s|listen_ipv6=YES|#listen_ipv6=YES|g" /etc/vsftpd.conf
     sed -i "s|anonymous_enable=NO|anonymous_enable=YES|g" /etc/vsftpd.conf
 
     echo "" >> /etc/vsftpd.conf
@@ -19,7 +19,7 @@ if [ ! -f "/etc/vsftpd.conf.bak" ]; then
 
     echo "" >> /etc/vsftpd.conf
 
-    echo "listen_post=21" >> /etc/vsftpd.conf
+    echo "listen_port=21" >> /etc/vsftpd.conf
     echo "listen_address=0.0.0.0" >> /etc/vsftpd.conf
     echo "seccomp_sandbox=NO" >> /etc/vsftpd.conf
 
@@ -35,9 +35,10 @@ if [ ! -f "/etc/vsftpd.conf.bak" ]; then
     echo "userlist_file=/etc/vsftpd.userlist" >> /etc/vsftpd.conf
     echo "userlist_deny=NO" >> /etc/vsftpd.conf
 
-    adduser $FTP_USER --disabled-password
-    echo "$FTP_USER:$FTP_PASSWORD" | /usr/sbin/chpasswd &> /dev/null
-    chown -R $FTP_USER:$FTP_USER /var/www/html
+    #adduser --disabled-password --gecos "" "$FTP_USER"
+    #echo "$FTP_USER:$FTP_PASSWORD" | chpasswd
+    #chown -R $FTP_USER:$FTP_USER /var/www/html
+    #echo "$FTP_USER" | tee -a /etc/vsftpd.userlist > /dev/null
 
 fi
 
