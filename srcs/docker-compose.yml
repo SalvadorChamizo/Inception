@@ -74,6 +74,20 @@ services: # This section defines the services in the Docker Compose file.
     networks:
       - inception
 
+  ftp-server:
+    container_name: ftp-server
+    build: ./requirements/bonus/ftp-server/
+    image: ftp-server:1.0.0
+    ports:
+      - "21:21"
+      - "21100-21110:21100-21110"
+    env_file: .env
+    restart: unless-stopped
+    volumes:
+      - Wordpress:/var/www/html
+    networks:
+      - inception
+
 volumes: # This section defines named volumes for your Docker Compose setup.
 # Volumes are used to persist data and share files between the host \
 # and containers or between containers.
