@@ -27,6 +27,14 @@ nginx:
 redis:
 	docker exec -it redis /bin/bash
 
+# Access adminer container
+adminer:
+	docker exec -ti adminer /bin/bash
+
+# Access ftp-server container
+ftp-server:
+	docker exec -ti ftp-server /bin/bash
+
 # Remove the volumes
 clean:
 	docker volume rm DataBase WordPress
