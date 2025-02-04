@@ -4,4 +4,6 @@ RUN apt update -y && apt install -y
 
 RUN apt install vsftpd -y
 
-CMD ["yes", "bloquea"]
+COPY ./ftp_init.sh /
+
+CMD ["sh", "ftp_init.sh"]
