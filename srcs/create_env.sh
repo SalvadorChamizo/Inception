@@ -76,7 +76,7 @@ WP_URL=${WP_URL:-$INCEPTION_USER.42.fr}
 
 # Bonus part
 read -p "Enter ftp_server username (default: $INCEPTION_USER): " FTP_USER
-FTP_USER=${FTP_USER:-INCEPTION_USER}
+FTP_USER=${FTP_USER:-$INCEPTION_USER}
 FTP_PASSWORD=$(prompt_with_loop "Enter ftp_server password: ")
 
 cat <<EOL > $ENV_FILE
