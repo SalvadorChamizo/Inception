@@ -4,7 +4,7 @@ RUN apt update -y && apt upgrade -y
 
 RUN apt install nginx -y && apt install openssl -y
 
-RUN mkdir -p /etc/nginx/ssl
+RUN mkdir -p /etc/nginx/ssl && mkdir -p /usr/share/nginx/static/
 
 RUN openssl req -x509 -nodes \
     -out /etc/nginx/ssl/inception.crt -keyout /etc/nginx/ssl/inception.key \
@@ -22,7 +22,8 @@ COPY conf/nginx.conf /etc/nginx/nginx.conf
 
 ###    BONUS PART -> STATIC WEBSITE  ###
 
-#COPY ../bonus/static-website/index.html /
+COPY ../bonus/static-website/index.html /usr/share/nginx/static/index.html
+COPY ../bonus/static-website/index.html /usr/share/nginx/index.html
 
 ###    END STATIC WEBSITE PART   ###
 
