@@ -4,6 +4,7 @@ export FTP_PASSWORD=1234
 if [ ! -f "/etc/vsftpd.conf.bak" ]; then
 
     mkdir -p /var/www/html
+    mkdir -p /var/run/vsftpd/empty
 
     cp /etc/vsftpd.conf /etc/vsftpd.conf.bak
 
@@ -12,17 +13,15 @@ if [ ! -f "/etc/vsftpd.conf.bak" ]; then
     sed -i "s|listen=NO|listen=YES|g" /etc/vsftpd.conf
     sed -i "s|listen_ipv6=YES|#listen_ipv6=YES|g" /etc/vsftpd.conf
     sed -i "s|anonymous_enable=NO|anonymous_enable=YES|g" /etc/vsftpd.conf
-<<<<<<< HEAD
-    sed -i "s|secure_chroot_dir=/var/run/vsftpd/empty|#secure_chroot_dir:/var/run/vsftpd/empty|g" /etc/vsftpd
-=======
-    sed -i "s|secure_chroot_dir:/var/run/vsftpd/empty|#secure_chroot_dir:/var/run/vsftpd/empty|g" /etc/vsftpd.conf
->>>>>>> eab63faa01285fa3627c8caeb20986ebbe69d742
+    sed -i "s|secure_chroot_dir=/var/run/vsftpd/empty|#secure_chroot_dir=/var/run/vsftpd/empty|g" /etc/vsftpd.conf
+    sed -i "s|#write_enable=YES|write_enable=YES|g" /etc/vsftpd.conf
+
 
     echo "" >> /etc/vsftpd.conf
 
     echo "chroot_local_user=YES" >> /etc/vsftpd.conf
     echo "allow_writeable_chroot=YES" >> /etc/vsftpd.conf
-    echo "user_sub_token=$USER" >> /etc/vsftpd.conf
+    echo "user_sub_token=$FTP_USER" >> /etc/vsftpd.conf
     echo "local_root=/var/www/html" >> /etc/vsftpd.conf
 
     echo "" >> /etc/vsftpd.conf
