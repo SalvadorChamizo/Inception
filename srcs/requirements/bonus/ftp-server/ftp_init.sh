@@ -1,5 +1,4 @@
-export FTP_USER=schamizo
-export FTP_PASSWORD=1234
+#!/bin/bash
 
 if [ ! -f "/etc/vsftpd.conf.bak" ]; then
 
@@ -51,7 +50,5 @@ if [ ! -f "/etc/vsftpd.conf.bak" ]; then
     chown -R www-data /var/www
     chmod -R 777 /var/www
 fi
-
-
 
 /usr/sbin/vsftpd /etc/vsftpd.conf
