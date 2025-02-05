@@ -12,7 +12,11 @@ if [ ! -f "/etc/vsftpd.conf.bak" ]; then
     sed -i "s|listen=NO|listen=YES|g" /etc/vsftpd.conf
     sed -i "s|listen_ipv6=YES|#listen_ipv6=YES|g" /etc/vsftpd.conf
     sed -i "s|anonymous_enable=NO|anonymous_enable=YES|g" /etc/vsftpd.conf
+<<<<<<< HEAD
     sed -i "s|secure_chroot_dir=/var/run/vsftpd/empty|#secure_chroot_dir:/var/run/vsftpd/empty|g" /etc/vsftpd
+=======
+    sed -i "s|secure_chroot_dir:/var/run/vsftpd/empty|#secure_chroot_dir:/var/run/vsftpd/empty|g" /etc/vsftpd.conf
+>>>>>>> eab63faa01285fa3627c8caeb20986ebbe69d742
 
     echo "" >> /etc/vsftpd.conf
 

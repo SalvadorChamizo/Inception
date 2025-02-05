@@ -13,7 +13,7 @@ mkdir -p /run/php
 # This command ensures that the web server (running as www-data) \
 # has the necessary ownership to read, write, and execute the \
 # WordPress files.
-chown -R www-data.www-data /var/www/html/wordpress
+chown -R www-data.www-data /var/www/
 # chown -> Changes the ownership of files and directories.
 # -R -> Recursively applies the ownership change to all files
 # www-data.www-data -> The first specifies the user, the second the group.
@@ -22,7 +22,7 @@ chown -R www-data.www-data /var/www/html/wordpress
 
 # This command define what actions (read, write, execute) can be \
 # performed by the owner, group and others.
-chmod -R 755 /var/www/html/wordpress
+chmod -R 755 /var/www/
 # 7 -> The owner has full permissions.
 # 5 -> The group and others can read and execute, but not write.
 
