@@ -20,6 +20,12 @@ RUN openssl req -x509 -nodes \
 
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 
+###    BONUS PART -> STATIC WEBSITE  ###
+
+#COPY ../bonus/static-website/index.html /
+
+###    END STATIC WEBSITE PART   ###
+
 EXPOSE 443
 
 CMD ["nginx", "-g", "daemon off;"]
