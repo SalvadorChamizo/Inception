@@ -84,7 +84,7 @@ services: # This section defines the services in the Docker Compose file.
     env_file: .env
     restart: unless-stopped
     volumes:
-      - Wordpress:/var/www/html
+      - WordPress:/var/www/html
     networks:
       - inception
 
