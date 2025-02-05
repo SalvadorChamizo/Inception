@@ -1,3 +1,6 @@
+export FTP_USER=schamizo
+export FTP_PASSWORD=1234
+
 if [ ! -f "/etc/vsftpd.conf.bak" ]; then
 
     mkdir -p /var/www/html
@@ -9,6 +12,7 @@ if [ ! -f "/etc/vsftpd.conf.bak" ]; then
     sed -i "s|listen=NO|listen=YES|g" /etc/vsftpd.conf
     sed -i "s|listen_ipv6=YES|#listen_ipv6=YES|g" /etc/vsftpd.conf
     sed -i "s|anonymous_enable=NO|anonymous_enable=YES|g" /etc/vsftpd.conf
+    sed -i "s|secure_chroot_dir=/var/run/vsftpd/empty|#secure_chroot_dir:/var/run/vsftpd/empty|g" /etc/vsftpd
 
     echo "" >> /etc/vsftpd.conf
 
@@ -36,10 +40,15 @@ if [ ! -f "/etc/vsftpd.conf.bak" ]; then
     echo "userlist_deny=NO" >> /etc/vsftpd.conf
 
     #adduser --disabled-password --gecos "" "$FTP_USER"
-    #echo "$FTP_USER:$FTP_PASSWORD" | chpasswd
-    #chown -R $FTP_USER:$FTP_USER /var/www/html
-    #echo "$FTP_USER" | tee -a /etc/vsftpd.userlist > /dev/null
-
+    useradd -m -d /var/www "$FTP_USER" && echo "$FTP_USER:$FTP_PASSWORD" | chpasswd
+    usermod -aG www-data "$FTP_USER"
+    echo "$FTP_USER:$FTP_PASSWORD" | chpasswd
+    chown -R $FTP_USER:$FTP_USER /var/www/html
+    echo "$FTP_USER" | tee -a /etc/vsftpd.userlist > /dev/null
+    chown -R www-data /var/www
+    chmod -R 777 /var/www
 fi
+
+
 
 /usr/sbin/vsftpd /etc/vsftpd.conf
