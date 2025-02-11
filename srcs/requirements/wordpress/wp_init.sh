@@ -92,11 +92,11 @@ wp config create --allow-root   --dbname=$SQL_DATABASE \
 ###            BONUS PART: REDIS              ###
 
 #Modify the wp-config.php to add Redis
-wp config set WP_REDIS_HOST 'redis' --raw --allow-root
+wp config set WP_REDIS_HOST 'redis' --allow-root
 wp config set WP_REDIS_PORT 6379 --raw --allow-root
 wp config set WP_CACHE true --raw --allow-root
-wp config set WP_CACHE_KEY_SALT 'mywordpresssite_' --raw --allow-root
-wp config set WP_REDIS_CLIENT 'phpredis' --raw --allow-root
+wp config set WP_CACHE_KEY_SALT 'mywordpresssite_' --allow-root
+wp config set WP_REDIS_CLIENT 'phpredis' --allow-root
 # WP_REDIS_HOST -> Define the Redis Host (container name for Redis service)
 # WP_REDIS_PORT -> Define the Redis Port (default 6379)
 # WP_CACHE -> Enable WordPress Object Cache
@@ -142,6 +142,9 @@ wp user create $WP_USR $WP_EMAIL --role=author \
 # wp user create -> Command to create a new WordPress user.
 # --role=author -> Specifies the role of the new user. Author can publish and manage their own posts.
 # Now I will use a command to run the PHP-FPM process in the foreground.
+wp theme install inspire --allow-root
+wp theme activate inspire --allow-root
+
 php-fpm${PHP_VERSION} -F
 # This is because containers are designed to keep running as long as \
 # their main process is active. Running php-fpm in the background \
