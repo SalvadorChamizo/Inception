@@ -23,7 +23,6 @@ COPY conf/nginx.conf /etc/nginx/nginx.conf
 ###    BONUS PART -> STATIC WEBSITE  ###
 
 COPY ../tools/index.html /usr/share/nginx/static/index.html
-COPY ../tools/index.html /usr/share/nginx/index.html
 
 ###    END STATIC WEBSITE PART   ###
 
