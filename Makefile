@@ -35,6 +35,9 @@ adminer:
 ftp-server:
 	docker exec -ti ftp-server /bin/bash
 
+uptime-kuma:
+	docker exec -ti uptime-kuma /bin/bash
+
 # Remove the volumes
 clean:
 	docker volume rm DataBase WordPress
