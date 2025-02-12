@@ -94,10 +94,10 @@ services: # This section defines the services in the Docker Compose file.
     image: uptime-kuma:1.0.0
     ports:
       - "3001:3001"
+    env_file: .env
     restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - KumaDataBase:/app/data
     networks:
       - inception
 
@@ -120,14 +120,6 @@ volumes: # This section defines named volumes for your Docker Compose setup.
       type: 'none'
       o: 'bind'
       device: ${MARIADB_DATA_LOCATION} # "/home/$USER/data/database" See in the create_env.sh file.
-
-  KumaDataBase:
-    name: KumaDataBase
-    driver: local
-    driver_opts:
-      type: 'none'
-      o: 'bind'
-      device: ${UPTIME-KUMA_DATA_LOCATION}
 
 networks:
   inception:
