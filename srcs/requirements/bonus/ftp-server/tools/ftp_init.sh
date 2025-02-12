@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# I need to modify the vsftpd.conf file in order to change and add the different requisites.
 if [ ! -f "/etc/vsftpd.conf.bak" ]; then
 
     mkdir -p /var/www/html
@@ -15,6 +14,7 @@ if [ ! -f "/etc/vsftpd.conf.bak" ]; then
     sed -i "s|anonymous_enable=NO|anonymous_enable=YES|g" /etc/vsftpd.conf
     sed -i "s|secure_chroot_dir=/var/run/vsftpd/empty|#secure_chroot_dir=/var/run/vsftpd/empty|g" /etc/vsftpd.conf
     sed -i "s|#write_enable=YES|write_enable=YES|g" /etc/vsftpd.conf
+
 
     echo "" >> /etc/vsftpd.conf
 
@@ -41,23 +41,32 @@ if [ ! -f "/etc/vsftpd.conf.bak" ]; then
     echo "userlist_file=/etc/vsftpd.userlist" >> /etc/vsftpd.conf
     echo "userlist_deny=NO" >> /etc/vsftpd.conf
 
-# Creates a new user and generate a home directory
+    #adduser --disabled-password --gecos "" "$FTP_USER"
     useradd -m -d /var/www "$FTP_USER" && echo "$FTP_USER:$FTP_PASSWORD" | chpasswd
-
-# Add the user to the www-data group
     usermod -aG www-data "$FTP_USER"
-
-# Change ownership of web files
+    echo "$FTP_USER:$FTP_PASSWORD" | chpasswd
     chown -R $FTP_USER:$FTP_USER /var/www/html
-
-# Add the User to the ftp allowed list
     echo "$FTP_USER" | tee -a /etc/vsftpd.userlist > /dev/null
-
-# Change the ownership of /var/www to www-data
     chown -R www-data /var/www
-
-# Change permissions for /var/www
-    chmod -R 755 /var/www
+    chmod -R 777 /var/www
 fi
 
 /usr/sbin/vsftpd /etc/vsftpd.conf
+
+# Creates a new user and generate a home directory
+#    useradd -m -d /var/www "$FTP_USER" && echo "$FTP_USER:$FTP_PASSWORD" | chpasswd
+
+# Add the user to the www-data group
+#    usermod -aG www-data "$FTP_USER"
+
+# Change ownership of web files
+#    chown -R $FTP_USER:$FTP_USER /var/www/html
+
+# Add the User to the ftp allowed list
+#    echo "$FTP_USER" | tee -a /etc/vsftpd.userlist > /dev/null
+
+# Change the ownership of /var/www to www-data
+#    chown -R www-data /var/www
+
+# Change permissions for /var/www
+#    chmod -R 755 /var/www
