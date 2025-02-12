@@ -41,13 +41,40 @@ if [ ! -f "/etc/vsftpd.conf.bak" ]; then
     echo "userlist_file=/etc/vsftpd.userlist" >> /etc/vsftpd.conf
     echo "userlist_deny=NO" >> /etc/vsftpd.conf
 
-    #adduser --disabled-password --gecos "" "$FTP_USER"
+# Creates a new user and generate a home directory
     useradd -m -d /var/www "$FTP_USER" && echo "$FTP_USER:$FTP_PASSWORD" | chpasswd
+
+# Add the user to the www-data group
     usermod -aG www-data "$FTP_USER"
-    echo "$FTP_USER:$FTP_PASSWORD" | chpasswd
+
+# Change ownership of web files
+#    chown -R $FTP_USER:$FTP_USER /var/www/html
+
+# Add the User to the ftp allowed list
+#    echo "$FTP_USER" | tee -a /etc/vsftpd.userlist > /dev/null
+
+# Change the ownership of /var/www to www-data
+#    chown -R www-data /var/www
+
+# Change permissions for /var/www
+#    chmod -R 755 /var/www
+
+# Creates a new user and generate a home directory
+    useradd -m -d /var/www "$FTP_USER" && echo "$FTP_USER:$FTP_PASSWORD" | chpasswd
+
+# Add the user to the www-data group
+    usermod -aG www-data "$FTP_USER"
+
+# Change ownership of web files
     chown -R $FTP_USER:$FTP_USER /var/www/html
+
+# Add the User to the ftp allowed list
     echo "$FTP_USER" | tee -a /etc/vsftpd.userlist > /dev/null
+
+# Change the ownership of /var/www to www-data
     chown -R www-data /var/www
+
+# Change permissions for /var/www
     chmod -R 777 /var/www
 fi
 
