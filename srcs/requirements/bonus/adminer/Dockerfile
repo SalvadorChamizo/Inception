@@ -13,8 +13,8 @@ RUN wget "https://github.com/vrana/adminer/releases/download/v4.8.1/adminer-4.8.
 
 RUN mkdir -p /var/www/html && mv index.php /var/www/html/
 
-COPY ./adminer_init.sh /
-COPY ./www.conf /
+COPY ./tools/adminer_init.sh /
+COPY ./conf/www.conf /
 
 EXPOSE 9000
 
