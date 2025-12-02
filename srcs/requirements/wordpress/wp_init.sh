@@ -13,7 +13,7 @@ mkdir -p /run/php
 # This command ensures that the web server (running as www-data) \
 # has the necessary ownership to read, write, and execute the \
 # WordPress files.
-chown -R www-data.www-data /var/www/html/wordpress
+chown -R www-data.www-data /var/www/
 # chown -> Changes the ownership of files and directories.
 # -R -> Recursively applies the ownership change to all files
 # www-data.www-data -> The first specifies the user, the second the group.
@@ -22,7 +22,7 @@ chown -R www-data.www-data /var/www/html/wordpress
 
 # This command define what actions (read, write, execute) can be \
 # performed by the owner, group and others.
-chmod -R 755 /var/www/html/wordpress
+chmod -R 755 /var/www/
 # 7 -> The owner has full permissions.
 # 5 -> The group and others can read and execute, but not write.
 
@@ -89,6 +89,36 @@ wp config create --allow-root   --dbname=$SQL_DATABASE \
 # --dbhost= -> Indicates where the database is.
 # --path= -> Path where the wp-config.php will be created.
 
+###            BONUS PART: REDIS              ###
+
+#Modify the wp-config.php to add Redis
+wp config set WP_REDIS_HOST 'redis' --allow-root
+wp config set WP_REDIS_PORT 6379 --raw --allow-root
+wp config set WP_CACHE true --raw --allow-root
+wp config set WP_CACHE_KEY_SALT 'mywordpresssite_' --allow-root
+wp config set WP_REDIS_CLIENT 'phpredis' --allow-root
+# WP_REDIS_HOST -> Define the Redis Host (container name for Redis service)
+# WP_REDIS_PORT -> Define the Redis Port (default 6379)
+# WP_CACHE -> Enable WordPress Object Cache
+# WP_CACHE_KEY_SALT (Recommended) -> This adds a prefix to all cache keys to avoid conflicts if multiple \
+# WordPress installations share the same Redis server.
+# WP_REDIS_CLIENT (Optional) -> This tells WordPress to use phpredis instead of Predis, which is slower.
+# --raw -> This prevents WordPress from wrapping values in quotes (true instead of 'true')
+
+# Install and activate Redis Object Cache Plugin
+wp plugin install redis-cache --activate --allow-root
+# install redis-cache -> Installs the Redis Object Cache Plugin
+# --activate -> Automatically activates the plugin after installation
+
+# (Optional but Recommended)
+wp plugin update --all --allow-root
+# Ensures all plugins are updated to the latest version
+
+# Enable Redis Cache in WordPress
+wp redis enable --allow-root
+
+###           END OF REDIS PART          ###
+
 # Command to install WordPress with the initial site configuration.
 wp core install --allow-root    --url=$WP_URL \
                                 --title=$WP_TITLE \
@@ -112,6 +142,9 @@ wp user create $WP_USR $WP_EMAIL --role=author \
 # wp user create -> Command to create a new WordPress user.
 # --role=author -> Specifies the role of the new user. Author can publish and manage their own posts.
 # Now I will use a command to run the PHP-FPM process in the foreground.
+wp theme install inspire --allow-root
+wp theme activate inspire --allow-root
+
 php-fpm${PHP_VERSION} -F
 # This is because containers are designed to keep running as long as \
 # their main process is active. Running php-fpm in the background \

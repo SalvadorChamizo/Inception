@@ -47,6 +47,60 @@ services: # This section defines the services in the Docker Compose file.
     networks:
       - inception
 
+  # Bonus Part
+  redis:
+    container_name: redis
+    build: ./requirements/bonus/redis/
+    image: redis:1.0.0
+    expose:
+      - "6379"
+    env_file: .env
+    restart: unless-stopped
+    depends_on:
+      - wordpress
+    networks:
+      - inception
+
+  adminer:
+    container_name: adminer
+    build: ./requirements/bonus/adminer/
+    image: adminer:1.0.0
+    expose:
+      - "9000"
+    env_file: .env
+    restart: unless-stopped
+    depends_on:
+      - mariadb
+    networks:
+      - inception
+
+  ftp-server:
+    container_name: ftp-server
+    build: ./requirements/bonus/ftp-server/
+    image: ftp-server:1.0.0
+    ports:
+      - "21:21"
+      - "21100-21110:21100-21110"
+    env_file: .env
+    restart: unless-stopped
+    volumes:
+      - WordPress:/var/www/html
+    networks:
+      - inception
+
+  uptime-kuma:
+    container_name: uptime-kuma
+    build: ./requirements/bonus/uptime-kuma/
+    image: uptime-kuma:1.0.0
+    ports:
+      - "3001:3001"
+    env_file: .env
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - inception
+
 volumes: # This section defines named volumes for your Docker Compose setup.
 # Volumes are used to persist data and share files between the host \
 # and containers or between containers.

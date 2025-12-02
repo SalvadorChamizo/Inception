@@ -25,6 +25,9 @@ RUN tar -xzf /tmp/wordpress.tar.gz -C /var/www/html && rm /tmp/wordpress.tar.gz
 
 RUN apt install -y mariadb-client
 
+# BONUS PART: Install PHP extension for Redis
+RUN apt install php-redis -y
+
 COPY wp_init.sh /
 
 EXPOSE 9000

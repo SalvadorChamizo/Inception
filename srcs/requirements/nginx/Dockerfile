@@ -4,7 +4,7 @@ RUN apt update -y && apt upgrade -y
 
 RUN apt install nginx -y && apt install openssl -y
 
-RUN mkdir -p /etc/nginx/ssl
+RUN mkdir -p /etc/nginx/ssl && mkdir -p /usr/share/nginx/static/
 
 RUN openssl req -x509 -nodes \
     -out /etc/nginx/ssl/inception.crt -keyout /etc/nginx/ssl/inception.key \
@@ -19,6 +19,12 @@ RUN openssl req -x509 -nodes \
 # directly from the command line.
 
 COPY conf/nginx.conf /etc/nginx/nginx.conf
+
+###    BONUS PART -> STATIC WEBSITE  ###
+
+COPY ../tools/index.html /usr/share/nginx/static/index.html
+
+###    END STATIC WEBSITE PART   ###
 
 EXPOSE 443
 
